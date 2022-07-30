@@ -34,7 +34,7 @@ const CharList = (props) => {
  
 
     const onCharListLoaded = (newCharList) => {
-
+        
         let ended = false; 
         if (newCharList.length < 9) {
             ended = true;
@@ -71,7 +71,7 @@ const CharList = (props) => {
                     tabIndex={0}
                     ref={elem => refItems.current[ind] = elem}
                     className="char__item"
-                    key = {item.id}
+                    key = {ind}
                     onClick={() => {
                         props.onCharSelected(item.id)
                         onFocusRef(ind);
