@@ -1,7 +1,7 @@
 
 import useMarvelService from '../../services/MarvelService';
 import Spinner from '../spinner/Spinner';
-import ErrorMessage from '../ErrorMessage/ErrorMesage';
+import ErrorMessage from '../ErrorMessage/ErrorMessage';
 import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 
