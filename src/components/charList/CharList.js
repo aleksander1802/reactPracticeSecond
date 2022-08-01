@@ -3,6 +3,7 @@ import useMarvelService from '../../services/MarvelService';
 import Spinner from '../spinner/Spinner';
 import ErrorMessage from '../ErrorMessage/ErrorMessage';
 import React, { useState, useEffect, useRef } from 'react';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import PropTypes from 'prop-types';
 
 import './charList.scss';
@@ -58,6 +59,21 @@ const CharList = (props) => {
         refItems.current[ind].focus();
     }
 
+    const duration = 300;
+
+    const defaultStyle = {
+        transition: `opacity ${duration}ms ease-in-out`,
+        opacity: 0,
+    }
+
+    const transitionStyles = {
+        entering: { opacity: 1 },
+        entered:  { opacity: 1 },
+        exiting:  { opacity: 0 },
+        exited:  { opacity: 0 },
+    };
+
+
 
     function charListItems(charList) {
         
@@ -67,7 +83,9 @@ const CharList = (props) => {
                 style = {"objectFit": "unset"};
             } 
             return (
-                     <li 
+                <CSSTransition key = {ind} timeout={2000} classNames={'char__item'}>
+                
+                  <li 
                     tabIndex={0}
                     ref={elem => refItems.current[ind] = elem}
                     className="char__item"
@@ -85,6 +103,8 @@ const CharList = (props) => {
                         <img style={style} src={item.thumbnail} alt={item.name}/>
                         <div className="char__name">{item.name}</div>
                     </li>
+                
+              </CSSTransition>                     
             )
         })
         
@@ -92,27 +112,17 @@ const CharList = (props) => {
         return (
             <ul 
             className="char__grid">
-                {items}
+                <TransitionGroup component={null}>
+                    {items}
+                </TransitionGroup>                
             </ul>
         )
     }
-
-   
-
-   
-
-
-    
     
     const spinner = loading && !newItemLoading ? <Spinner/> : null;
     const errorMessage = error ? <ErrorMessage/> : null;
 
     const items = charListItems(charList);
-
-    
-    
-    
-
 
     return (
         <div className="char__list">
@@ -126,7 +136,8 @@ const CharList = (props) => {
                 onClick={() => onRequest(offset)}>
                 <div 
                     className="inner"
-                    style={{'display': newItemLoading ? 'none' : 'block'}}>
+                    style={{'display': newItemLoading ? 'none' : 'block'}}
+                    >
                     Load more
                 </div>
             </button>

@@ -22,6 +22,20 @@
         padding: 15px;
         cursor: pointer;
         transition: 0.3s transform;
+        &-enter {
+            opacity: 0;
+            filter: grayscale(0);
+            &-active {
+                opacity: 1;
+                filter: grayscale(100%);
+                transition: opacity 2000ms;
+            }
+            &-done {
+                opacity: 1;
+                filter: grayscale(100%);
+            }
+        }
+        
         img {
             width: 200px;
             height: 200px;
@@ -31,6 +45,8 @@
         &_selected {
             box-shadow: 0 5px 20px $main-color;
             transform: translateY(-8px);
+            filter: grayscale(0);
+            transition: 0.3s;
         }
     }
     &__name {
